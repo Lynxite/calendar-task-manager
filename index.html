@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button id="prev-year">&laquo;</button>
+        <button id="prev-month">&lsaquo;</button>
+        <span id="month-year"></span>
+        <button id="next-month">&rsaquo;</button>
+        <button id="next-year">&raquo;</button>
+      </div>
+      <div id="calendar" class="calendar-days"></div>
+      <div class="task-adder">
+        <input type="text" id="task-desc" placeholder="Task Description">
+        <button id="add-task">Add Task</button>
+      </div>
+      <div id="tasks-container"></div>
+   </div>
+  </div>
+
+  <dialog class="confirm">
+    <span class="confirm-text">Are you sure you want to delete <span class="task-name"></span></span>
+    <div class="modal-btns">
+      <button class="cancel-button modal-btn"><span>&times;</span></button>
+      <button class="confirm-button modal-btn"><img src="done.png" alt="" height="25px"></button>
+    </div>
+  </dialog>
+ 
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+ <script src="script.js"></script>
+</body>
+</html>

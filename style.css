@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;1,300&family=MuseoModerno:ital,wght@1,350&display=swap');
+
+:root {
+  --text: #dff1eb;
+  --text2:#b9d9cc7e;
+  --background: #0c1a16;
+  --primary: #98d0c1;
+  --secondary: #344e72;
+  --accent: #9b9dc1;
+  --ff-heading:'MuseoModerno', sans-serif;
+  --ff-text:'Montserrat Alternates', sans-serif;
+}
+body{
+  margin: 0px 0px;
+  padding: 15px 0px;
+  background-color: var(--background);
+  color:var(--text);
+}
+button{
+  cursor: pointer;
+}
+.wrapper{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-family:var(--ff-text);
+}
+.calendar-container { 
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+}
+.calendar-header { 
+  display: flex; 
+  font-family: var(--ff-heading);
+  font-size: 20px;
+  justify-content: center; 
+  align-items:center ;
+  gap: 10px; 
+  margin-bottom: 10px; 
+}
+
+.calendar-header > button{
+  background-color:transparent;
+  border: none;
+  border-radius: 5px;
+  color:var(--text);
+  padding:2px 8px;
+  font-size: 1.2rem;
+  transition: all 200ms ease-in-out;
+}
+.calendar-header > button:hover{
+  background-color:#98d0c1d0;
+  color: black;
+}
+
+.calendar-days {
+  display: grid; 
+  grid-template-columns: repeat(7, 0fr); 
+}
+.day { 
+  width:clamp(30px, 0.3vw, 45px);
+  height:clamp(30px, 0.3vw, 45px);
+  border-radius: 5px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin: 1px; 
+  cursor: pointer; 
+  transition: all 200ms ease-in-out;
+}
+.day.selected { 
+  background-color: var(--secondary); 
+}
+.day.today{
+  background-color: var(--accent);
+  color:var(--background)
+}
+.day.today.selected{
+  background-color:#babce6;
+}
+.task-adder{
+  margin-top:20px;
+}
+#tasks-container { 
+  margin-top: 10px;
+  text-align: center;
+}
+#add-task{
+  padding:8px 12px;
+  font-family:var(--ff-heading);
+  transition: all 200ms ease-in-out;
+}
+#task-desc{
+  padding: 8px 12px;
+  border-radius: 2px;
+  background-color: var(--primary);
+  border: none;
+  font-family:var(--ff-heading);
+  margin-bottom:8px;
+  outline: none;
+  transition: all 200ms ease-out;
+}
+#task-desc::placeholder{
+  color:black;
+  transition: all 200ms ease-in-out;
+}
+#task-desc:focus{
+  outline: none; 
+  box-shadow: 0px 0px 4px 0px var(--text);
+  border: none;
+  background-color:#2d3d39;
+  color:var(--text);
+}
+#task-desc:focus::placeholder{
+  color:var(--text);
+}
+#add-task{
+  background-color:var(--primary);
+  border: none;
+  border-radius: 2px;
+}
+#task-desc:focus ~ #add-task{
+  background-color:#2d3d39;
+  box-shadow: 0px 0px 4px 0px var(--text);
+  color:var(--text);
+  border: none;
+}
+.task { 
+  padding: 2px 0;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+.task-desc{
+  margin-bottom: 8px;
+  max-width: 89vw;
+  overflow-wrap: break-word;
+}
+.task-desc:focus{
+  outline:1px solid var(--text2);
+}
+.actions{
+  margin-bottom:5px;
+}
+.actions > button{
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  border-radius:20px;
+  transition: all 200ms ease-in-out;
+}
+.actions > button:hover{
+  background-color:#ffffff8e;
+}
+.delete > img{
+  filter: invert(100%);
+}
+.delete:hover > img{
+  filter:none;
+}
+.actions > button:hover > img{
+  filter: invert(75%);
+}
+.actions > button > img{
+  height: 15px;
+  pointer-events: none;
+}
+.white-line{
+  width:100px;
+  height: 1px;
+  background-color:var(--text2);
+}
+.confirm{
+  width: 89vw;
+  max-width: 300px;
+  height:max-content;
+  background-color:#143028;
+  color:var(--text);
+  border: 1px solid var(--text2);
+  font-family: var(--ff-heading);
+}
+.modal-btns{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-btn{
+  background-color: transparent;
+  border-radius: 50px;
+  height: 30px;
+  width: 30px;
+  border:none;
+  margin-bottom:5px;
+  transition: all 200ms ease-in-out;
+}
+.cancel-button > span{
+  filter: invert();
+  font-weight: bold;
+  font-size: 25px;
+}
+.modal-btn:hover{
+  background-color: var(--primary);
+}
+.confirm-text{
+  display: block;
+}
+.task-name{
+  display: block;
+  word-break: break-all;
+}
+.cancel-button > img{
+  height: 24px;
+  transform: translateX(10px);
+}
+.confirm::backdrop{
+  background-color: #2222227c;
+}
