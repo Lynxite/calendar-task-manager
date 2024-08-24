@@ -23,7 +23,7 @@ function createCalendar(year, month) {
     days.push(i);
   }
   const nextMonthDays = 35 - days.length;
-  for (let i = 0; nextMonthDays && i < nextMonthDays; i++) {
+  for (let i = 0; i < nextMonthDays; i++) {
     days.push('');
   }
 
@@ -31,23 +31,49 @@ function createCalendar(year, month) {
   days.forEach(day => {
     const dayDiv = document.createElement('div');
     dayDiv.className = 'day';
-    dayDiv.textContent = day;
-
-    if (day && year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-      dayDiv.classList.add('today'); // Add a special class for today
-    }
 
     if (day) {
+      const dateKey = moment(new Date(year, month, day)).format('YYYY-MM-DD');
+      const taskCount = tasks[dateKey] ? tasks[dateKey].length : 0;
+      const busynessColor = getBusynessColor(taskCount);
+
+
+      const dayNumberDiv = document.createElement('div');
+      dayNumberDiv.className = 'day-number';
+      dayNumberDiv.textContent = day;
+
+
+      const busynessDiv = document.createElement('div');
+      busynessDiv.className = 'busyness';
+      busynessDiv.style.backgroundColor = busynessColor;
+
+
+      dayDiv.appendChild(dayNumberDiv);
+      dayDiv.appendChild(busynessDiv);
+
+      if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+        dayDiv.classList.add('today');
+      }
+
       dayDiv.addEventListener('click', () => {
         selectDate(year, month, day);
       });
     }
+
     calendarContainer.appendChild(dayDiv);
   });
 
   monthYearDisplay.textContent = moment(new Date(year, month)).format('MMMM YYYY');
   addTaskActions();
 }
+
+function getBusynessColor(taskCount) {
+  if (taskCount === 0) return '#e0e0e0'; // Gray for no tasks
+  if (taskCount <= 1) return 'green'; // Green for light busyness
+  if (taskCount <= 4) return '#f1c40f'; // Yellow for moderate busyness
+  return '#e74c3c'; // Red for busy
+}
+
 
 function selectDate(year, month, day) {
   selectedDate = new Date(year, month, day);
@@ -59,6 +85,7 @@ function selectDate(year, month, day) {
   if (selectedDayDiv) selectedDayDiv.classList.add('selected');
   updateTasksList();
   addTaskActions();
+  changeHeight();
 }
 
 function updateTasksList() {
@@ -74,6 +101,11 @@ function updateTasksList() {
       <span class="task-desc">${task}</span>
       <div class="white-line"></div> 
     </div>`).join('');
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'title'
+  titleDiv.textContent = 'Your Tasks Today'
+  tasksContainer.appendChild(titleDiv);
+
   addTaskActions();
 }
 
@@ -90,6 +122,7 @@ function addTask() {
   taskDescInput.value = '';
   updateTasksList();
   saveTasks();
+  createCalendar(currentYear, currentMonth);
 }
 
 function saveTasks() {
@@ -132,12 +165,12 @@ function addTaskActions() {
       const taskDesc = taskSpan.innerText || taskSpan.textContent;
       taskSpan.setAttribute('contenteditable', 'false');
       editBtnImg.setAttribute('src', 'edit.png');
-      // Find and update the task in the tasks array
+
       const taskIndex = Array.from(tasksContainer.querySelectorAll('.task-desc')).indexOf(taskSpan);
       if (taskIndex !== -1) {
         tasks[dateKey][taskIndex] = taskDesc;
       }
-      saveTasks(); // Save the updated tasks
+      saveTasks(); 
     }
   });
 
@@ -168,6 +201,7 @@ function addTaskActions() {
         delete tasks[dateKey]; 
       }
       saveTasks();
+      createCalendar(currentYear, currentMonth);
     }
 
       currentTask.remove();     
@@ -204,3 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
   createCalendar(currentYear, currentMonth);
 });
 
+// For CSS
+function changeHeight(){
+  const remainingHeight = window.innerHeight - calendarContainer.offsetHeight;
+  const determineHeight = tasksContainer.length ? tasksContainer.style.setProperty('--height', remainingHeight) : tasksContainer.style.setProperty('--height', '30vh');
+
+  return determineHeight
+}
