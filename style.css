@@ -12,9 +12,17 @@
 }
 body{
   margin: 0px 0px;
-  padding: 15px 0px;
   background-color: var(--background);
   color:var(--text);
+  overflow: auto;
+}
+
+body::-webkit-scrollbar{
+  width:5px;
+  background-color:#1f4439;
+}body::-webkit-scrollbar-thumb{
+  background-color:#37836c;
+  border-radius: 2px;
 }
 button{
   cursor: pointer;
@@ -23,15 +31,22 @@ button{
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   font-family:var(--ff-text);
+
 }
 .calendar-container { 
+  height: 100%;
+  transform: translateX(-10px);
+  padding-top:10px;
+  padding-left: 10px;
   display:flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  height: fit-content;
+  flex: 3;
 }
 .calendar-header { 
   display: flex; 
@@ -42,7 +57,9 @@ button{
   gap: 10px; 
   margin-bottom: 10px; 
 }
-
+#month-days{
+  text-align: center;
+}
 .calendar-header > button{
   background-color:transparent;
   border: none;
@@ -62,15 +79,23 @@ button{
   grid-template-columns: repeat(7, 0fr); 
 }
 .day { 
-  width:clamp(30px, 0.3vw, 45px);
-  height:clamp(30px, 0.3vw, 45px);
+  position: relative;
+  width:clamp(42px, 0.3vw, 50px);
+  height:clamp(42px, 0.3vw, 50px);
   border-radius: 5px;
   display: flex; 
   align-items: center; 
   justify-content: center; 
   margin: 1px; 
-  cursor: pointer; 
+  cursor:pointer; 
   transition: all 200ms ease-in-out;
+}
+.busyness{
+  position: absolute;
+  bottom: 5px;
+  height: 5px;
+  width: 5px;
+  border-radius:50px;
 }
 .day.selected { 
   background-color: var(--secondary); 
@@ -85,9 +110,31 @@ button{
 .task-adder{
   margin-top:20px;
 }
-#tasks-container { 
-  margin-top: 10px;
+.title{
+  position:absolute;
+  top: 10px;
+  width: 100%;
+  font-family: 'MuseoModerno';
+  font-size: 16px;
+}
+#tasks-container::-webkit-scrollbar{
+  width:5px;
+  background-color:#17352c;
+}#tasks-container::-webkit-scrollbar-thumb{
+  background-color: #2d6151;
+  border-radius: 2px;
+}
+#tasks-container {
+  position: relative;
+  height:80vh;
   text-align: center;
+  flex:1.5;
+  display: flex;
+  padding-top: 30px;
+  flex-direction:column;
+  min-width: 150px;
+  overflow-y: scroll;
+  background-color: #091612;
 }
 #add-task{
   padding:8px 12px;
@@ -95,6 +142,7 @@ button{
   transition: all 200ms ease-in-out;
 }
 #task-desc{
+  max-width: 90%;
   padding: 8px 12px;
   border-radius: 2px;
   background-color: var(--primary);
@@ -138,7 +186,7 @@ button{
 .task-desc{
   margin-bottom: 8px;
   max-width: 89vw;
-  overflow-wrap: break-word;
+  word-break: break-all;
 }
 .task-desc:focus{
   outline:1px solid var(--text2);
